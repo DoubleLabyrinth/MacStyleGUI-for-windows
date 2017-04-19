@@ -22,9 +22,6 @@ namespace MacGUI::Forms::Tools {
 		HWND AssociatedHwnd;
 		FLOAT CornerRadius;
 
-		// info used when moving or sizing window.
-		BOOL WndMoving;
-
 		ID2D1PathGeometry* LeftUpCornerArea;
 		ID2D1PathGeometry* RightUpCornerArea;
 		ID2D1PathGeometry* LeftDownCornerArea;
@@ -60,8 +57,6 @@ namespace MacGUI::Forms::Tools {
 
 		VOID SetCornerRadius(FLOAT srcRadiusm, BOOL Update);
 		FLOAT GetCornerRadius() const;
-
-		BOOL IsMoving() const;
 		
 		BYTE GetHitArea(const D2D1_POINT_2F& CursorPos);
 		LPCTSTR GetCursorID(const D2D1_POINT_2F& CursorPos);

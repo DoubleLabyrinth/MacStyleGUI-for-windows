@@ -11,7 +11,6 @@ namespace MacGUI::Forms::Tools {
 
 	FrameManager::FrameManager(_In_ ID2D1Factory* pD2DFactory) {
 		AssociatedHwnd = NULL;
-		WndMoving = FALSE;
 		CornerRadius = 5.0f;
 
 		LeftUpCornerArea = nullptr;
@@ -26,8 +25,6 @@ namespace MacGUI::Forms::Tools {
 
 		parentD2D_Factory = pD2DFactory;
 		if (parentD2D_Factory == nullptr) return;
-
-		//CreateArea();
 	}
 
 	FrameManager::~FrameManager() {
@@ -544,10 +541,6 @@ namespace MacGUI::Forms::Tools {
 
 	FLOAT FrameManager::GetCornerRadius() const {
 		return CornerRadius;
-	}
-
-	BOOL FrameManager::IsMoving() const {
-		return WndMoving;
 	}
 
 	BYTE FrameManager::GetHitArea(const D2D1_POINT_2F& CursorPos) {
