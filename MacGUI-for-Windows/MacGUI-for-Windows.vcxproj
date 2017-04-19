@@ -148,7 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MacGUI_lib\Forms\BaseForm.cpp" />
-    <ClCompile Include="MacGUI_lib\Forms\WindowFrameManager.cpp" />
+    <ClCompile Include="MacGUI_lib\Forms\Tools\MovingManager.cpp" />
+    <ClCompile Include="MacGUI_lib\Forms\Tools\SizingManager.cpp" />
+    <ClCompile Include="MacGUI_lib\Forms\Tools\FrameManager.cpp" />
     <ClCompile Include="MacGUI_lib\Forms\MacForm\MacForm.cpp" />
     <ClCompile Include="MacGUI_lib\Global.cpp" />
     <ClCompile Include="MacGUI_lib\Forms\WindowClassExHelper.cpp" />
@@ -157,7 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MacGUI_lib\Forms\BaseForm.h" />
-    <ClInclude Include="MacGUI_lib\Forms\WindowFrameManager.h" />
+    <ClInclude Include="MacGUI_lib\Forms\Tools\MovingManager.h" />
+    <ClInclude Include="MacGUI_lib\Forms\Tools\SizingManager.h" />
+    <ClInclude Include="MacGUI_lib\Forms\Tools\FrameManager.h" />
     <ClInclude Include="MacGUI_lib\Forms\MacForm\MacForm.h" />
     <ClInclude Include="MacGUI_lib\Global.h" />
     <ClInclude Include="MacGUI_lib\Forms\WindowClassExHelper.h" />

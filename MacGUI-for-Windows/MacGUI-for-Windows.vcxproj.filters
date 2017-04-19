@@ -33,7 +33,13 @@
     <ClCompile Include="MacGUI_lib\Graphics\Canvas.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MacGUI_lib\Forms\WindowFrameManager.cpp">
+    <ClCompile Include="MacGUI_lib\Forms\Tools\SizingManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MacGUI_lib\Forms\Tools\FrameManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MacGUI_lib\Forms\Tools\MovingManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +59,13 @@
     <ClInclude Include="MacGUI_lib\Graphics\Canvas.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MacGUI_lib\Forms\WindowFrameManager.h">
+    <ClInclude Include="MacGUI_lib\Forms\Tools\SizingManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MacGUI_lib\Forms\Tools\FrameManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MacGUI_lib\Forms\Tools\MovingManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
