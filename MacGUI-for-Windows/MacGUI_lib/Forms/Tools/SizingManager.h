@@ -1,8 +1,6 @@
 #pragma once
-#pragma comment(lib, "d2d1.lib")
 
 #include <windows.h>
-#include <d2d1.h>
 
 namespace MacGUI::Forms::Tools {
 
