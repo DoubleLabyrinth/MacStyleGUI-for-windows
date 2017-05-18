@@ -5,6 +5,8 @@
 #include <dxgi1_5.h>
 #include <d2d1_3.h>
 
+#include "../Global.h"
+
 namespace MacGUI::Graphics {
 
 	class CompositionSwapChain {
@@ -12,20 +14,21 @@ namespace MacGUI::Graphics {
 		CompositionSwapChain(const CompositionSwapChain&) = delete;
 		CompositionSwapChain& operator=(const CompositionSwapChain&) = delete;
 	protected:
-		IDXGIFactory2* parentDXGIFactory;
-		IDXGIDevice* parentDXGIDevice;
-
 		IDXGISwapChain1* m_SwapChain;
 		DXGI_SWAP_CHAIN_DESC1 m_SwapChainDescription;
 	public:
-		CompositionSwapChain(_In_ IDXGIDevice* srcDXGIDevice,
-							 _In_ IDXGIFactory2* srcDXGIFactory,
+		CompositionSwapChain(_In_ UINT nWidth, _In_ UINT nHeight,
 							 _In_opt_ DXGI_SWAP_CHAIN_DESC1* srcSwapChainDesc = nullptr);
 
 		~CompositionSwapChain();
 
-		HRESULT CreateSwapChain(_In_opt_ IDXGIOutput* pRestrictToOutput = nullptr);
+		HRESULT CreateSwapChain();
 		ULONG ReleaseSwapChain();
+
+		HRESULT Resize(_In_ UINT newWidth, _In_ UINT newHeight);
+
+		IDXGISwapChain1* GetSwapChianInstance();
+		const DXGI_SWAP_CHAIN_DESC1& GetSwapChainDescription() const;
 
 		// Setter.
 		// But only available when IDXGISwapChain1 is not created or destroyed, in other words, when m_SwapChain is a null pointer.
@@ -35,15 +38,6 @@ namespace MacGUI::Graphics {
 		BOOL SetFlags(_In_ DXGI_SWAP_CHAIN_FLAG newFlags);
 		BOOL SetFormat(_In_ DXGI_FORMAT newFormat);
 		BOOL SetSampleDesc(_In_ UINT newSampleCount, _In_ UINT newSampleQuality);
-		BOOL SetStereo(_In_ BOOL newStereo);
-		BOOL SetSize(_In_ UINT newWidth, _In_ UINT newHeight);
-		BOOL ChangeDXGIFactory(_In_ IDXGIFactory2* newDXGIFactory);
-		BOOL ChangeDXGIDevice(_In_ IDXGIDevice* newDXGIDevice);
-
-		HRESULT ResizeAllBuffers(_In_ UINT newWidth, _In_ UINT newHeight);
-
-		IDXGISwapChain1* GetSwapChianInstance();
-		const DXGI_SWAP_CHAIN_DESC1& GetSwapChainDescription() const;
 	};
 
 	class SurfaceCanvas {
@@ -51,7 +45,7 @@ namespace MacGUI::Graphics {
 		SurfaceCanvas(const SurfaceCanvas&) = delete;
 		SurfaceCanvas& operator=(const SurfaceCanvas&) = delete;
 
-		CompositionSwapChain* parentSwapChain;
+		CompositionSwapChain* parentCompositionSwapChain;
 		ID2D1DeviceContext2* parentD2DDeviceContext;
 
 		IDXGISurface2* m_Surface;
@@ -66,7 +60,6 @@ namespace MacGUI::Graphics {
 
 		BOOL SetCanvasBitmapOptions(_In_ D2D1_BITMAP_OPTIONS newOptions);
 		BOOL SetCanvasColorContext(_In_ ID2D1ColorContext* newColorContext);
-		BOOL SetCanvasDpi(_In_ FLOAT newDpiX, _In_ FLOAT newDpiY);
 		BOOL SetCanvasPixelFormat(D2D1_ALPHA_MODE newAlphaMode, DXGI_FORMAT newFormat);
 
 		HRESULT ObtainSurface();
@@ -75,7 +68,7 @@ namespace MacGUI::Graphics {
 		ULONG ReleaseCanvas();
 		ULONG ReleaseSurface();
 
-		HRESULT ResizeCanvas(UINT newWidth, UINT newHeight);
+		HRESULT Resize(_In_ UINT newWidth, _In_ UINT newHeight);
 	};
-	
+
 }
