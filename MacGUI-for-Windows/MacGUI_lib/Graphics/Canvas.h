@@ -9,64 +9,39 @@
 
 namespace MacGUI::Graphics {
 
-	class CompositionSwapChain {
+	class Canvas {
 	private:
-		CompositionSwapChain(const CompositionSwapChain&) = delete;
-		CompositionSwapChain& operator=(const CompositionSwapChain&) = delete;
+		Canvas(const Canvas&) = delete;
+		Canvas& operator=(const Canvas&) = delete;
 	protected:
-		IDXGISwapChain1* m_SwapChain;
-		DXGI_SWAP_CHAIN_DESC1 m_SwapChainDescription;
-	public:
-		CompositionSwapChain(_In_ UINT nWidth, _In_ UINT nHeight,
-							 _In_opt_ DXGI_SWAP_CHAIN_DESC1* srcSwapChainDesc = nullptr);
-
-		~CompositionSwapChain();
-
-		HRESULT CreateSwapChain();
-		ULONG ReleaseSwapChain();
-
-		HRESULT Resize(_In_ UINT newWidth, _In_ UINT newHeight);
-
-		IDXGISwapChain1* GetSwapChianInstance();
-		const DXGI_SWAP_CHAIN_DESC1& GetSwapChainDescription() const;
-
-		// Setter.
-		// But only available when IDXGISwapChain1 is not created or destroyed, in other words, when m_SwapChain is a null pointer.
-		BOOL SetAlphaMode(_In_ DXGI_ALPHA_MODE newAlphaMode);
-		BOOL SetBufferCount(_In_ UINT newBufferCount);
-		BOOL SetBufferUsage(_In_ DXGI_USAGE newBufferUsage);
-		BOOL SetFlags(_In_ DXGI_SWAP_CHAIN_FLAG newFlags);
-		BOOL SetFormat(_In_ DXGI_FORMAT newFormat);
-		BOOL SetSampleDesc(_In_ UINT newSampleCount, _In_ UINT newSampleQuality);
-	};
-
-	class SurfaceCanvas {
-	private:
-		SurfaceCanvas(const SurfaceCanvas&) = delete;
-		SurfaceCanvas& operator=(const SurfaceCanvas&) = delete;
-
-		CompositionSwapChain* parentCompositionSwapChain;
 		ID2D1DeviceContext2* parentD2DDeviceContext;
 
+		IDXGISwapChain1* m_SwapChain;
 		IDXGISurface2* m_Surface;
 		ID2D1Bitmap1* m_BitmapCanvas;
+
+		DXGI_SWAP_CHAIN_DESC1 m_SwapChainDescription;
 		D2D1_BITMAP_PROPERTIES1 m_BitmapCanvasProps;
 	public:
-		SurfaceCanvas(_In_ CompositionSwapChain* srcSwapChain,
-					  _In_ ID2D1DeviceContext2* srcD2DDeviceContext,
-					  _In_opt_ D2D1_BITMAP_PROPERTIES1* srcCanvasProps = nullptr);
+		Canvas(_In_ UINT nWidth, _In_ UINT nHeight,
+			   _In_ ID2D1DeviceContext2* srcD2DDeviceContext,
+			   _In_opt_ DXGI_SWAP_CHAIN_DESC1* srcSwapChainDesc = nullptr,
+			   _In_opt_ D2D1_BITMAP_PROPERTIES1* srcCanvasProps = nullptr);
 
-		~SurfaceCanvas();
+		~Canvas();
 
-		BOOL SetCanvasBitmapOptions(_In_ D2D1_BITMAP_OPTIONS newOptions);
-		BOOL SetCanvasColorContext(_In_ ID2D1ColorContext* newColorContext);
-		BOOL SetCanvasPixelFormat(D2D1_ALPHA_MODE newAlphaMode, DXGI_FORMAT newFormat);
+		HRESULT ChangeD2DDeviceContext(_In_ ID2D1DeviceContext2* newD2DDeviceContext);
+		const DXGI_SWAP_CHAIN_DESC1 GetSwapChainDesc() const;
+		HRESULT ChangeSwapChainDesc(_In_ const DXGI_SWAP_CHAIN_DESC1& newDesc, _In_ BOOL reCreateCanvas);
+		const D2D1_BITMAP_PROPERTIES1 GetCanvasProps() const;
+		HRESULT ChangeCanvasProps(_In_ const D2D1_BITMAP_PROPERTIES1& newProps, _In_ BOOL reCreateCanvas);
 
-		HRESULT ObtainSurface();
 		HRESULT CreateCanvas();
-		ID2D1Bitmap1* GetCanvasInstance();
-		ULONG ReleaseCanvas();
-		ULONG ReleaseSurface();
+		VOID DisposeCanvas();
+
+		IDXGISwapChain1* GetSwapChain();
+		IDXGISurface2* GetSurface();
+		ID2D1Bitmap1* GetCanvas();
 
 		HRESULT Resize(_In_ UINT newWidth, _In_ UINT newHeight);
 	};
