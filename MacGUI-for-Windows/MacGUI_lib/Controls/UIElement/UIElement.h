@@ -1,34 +1,26 @@
 #pragma once
+#include "../../Graphics/Canvas.h"
 
-#include "../Canvas.h"
+namespace MacGUI::Controls {
 
-namespace MDGUI::DrawingTools {
-
-	class UIElement {
+	class UIElement : public MacGUI::Graphics::Canvas {
 	private:
 		BOOL Initialized;
 	protected:
-		CompositionSwapChain* m_UISwapChain;
-		SurfaceCanvas* m_UICanvas;
-
-		D2D1_SIZE_U m_UISize;
+		UINT m_Width;
+		UINT m_Height;
 	public:
-		UIElement();
+		FLOAT OffsetX;
+		FLOAT OffsetY;
 
-		~UIElement();
+		UIElement(_In_ UINT nWidth, _In_ UINT nHeight,
+				  _In_opt_ ID2D1DeviceContext2* srcD2DDeviceContext = nullptr,
+				  _In_opt_ DXGI_SWAP_CHAIN_DESC1* srcSwapChainDesc = nullptr,
+				  _In_opt_ D2D1_BITMAP_PROPERTIES1* srcCanvasProps = nullptr);
 
-		HRESULT Initialize(_In_ IDXGIDevice* srcDXGIDevice,
-						   _In_ IDXGIFactory2* srcDXGIFactory,
-						   _In_ ID2D1DeviceContext2* srcD2DDeviceContext,
-						   _In_opt_ DXGI_SWAP_CHAIN_DESC1* srcSwapChainDesc = nullptr,
-						   _In_opt_ D2D1_BITMAP_PROPERTIES1* srcCanvasProps = nullptr);
-
-		VOID Destroy();
-
-		CompositionSwapChain* GetSwapChain();
-		SurfaceCanvas* GetCanvas();
-
-
+		UINT Width() const;
+		UINT Height() const;
+		
 		virtual HRESULT OnPaint() = 0;
 	};
 }
